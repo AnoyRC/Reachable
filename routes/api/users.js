@@ -45,7 +45,6 @@ router.post('/',[
 
         let profile = new Profile({
             user : user.id,
-            name : user.name,
         })
 
         await profile.save();
