@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "server": "nodemon server"
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\" "
   },
   "author": "Anoy Roy Chowdhury",
   "license": "MIT",
@@ -16,6 +18,7 @@
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.2",
+    "react-axios": "^2.0.6",
     "request": "^2.88.2"
   },
   "devDependencies": {
