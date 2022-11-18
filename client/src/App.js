@@ -1,11 +1,14 @@
 import './App.css';
-import {Fragment} from 'react';
+import { BrowserRouter as Router,Route,Routes } from 'react-router-dom';
+import Register from './components/Register'
 
 function App() {
   return (
-    <Fragment>
-      <h1>App</h1>
-    </Fragment>
+    <Router>
+      <Routes>
+        <Route path = 'register' element = {<Register />} />
+      </Routes>
+    </Router>
   );
 }
 
