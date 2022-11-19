@@ -26,7 +26,7 @@ router.get('/', auth, async(req,res)=>{
 // @access  Public
 router.post('/', [
     check('email','Please include a valid Email').isEmail(),
-    check('password','Password is required').exists()
+    check('password','Password is required').not().isEmpty()
 ],async(req,res)=>{
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -52,7 +52,7 @@ router.post('/', [
         //Return jsonwebtoken
         const payload = {
             user:{
-                id:user.id
+                id:user.id,
             }
         }
 

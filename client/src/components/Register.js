@@ -5,9 +5,9 @@ export default function Register() {
     const [name,setName] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
-
     const [errorMessage, setErrorMessage] = useState();
 
+    //Register User route
     async function registerUser(event){
         event.preventDefault()
         console.log("Register")
