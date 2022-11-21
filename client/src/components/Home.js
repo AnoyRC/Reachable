@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
 import Post from './Post'
@@ -39,10 +39,10 @@ const Home = () => {
   return (
     <div>
         {status && posts &&
-        <div>
+        <Fragment>
             <h1>Logged In</h1>
             {posts.map((post,index) => <li key={index}><Post post = {post} /></li>)}
-        </div>} 
+        </Fragment>} 
     </div>
   )
 }
