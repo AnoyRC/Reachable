@@ -29,7 +29,9 @@ router.post('/' , [auth, [
 
         const post = await newPost.save();
 
-        res.json(post);
+        const posts = await Post.find().sort({ date:-1 })
+
+        res.json(posts);
 
     } catch (err) {
         console.error(err.message);

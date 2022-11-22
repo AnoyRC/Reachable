@@ -8,6 +8,7 @@ const Home = () => {
     //Log In status
     const [status , setStatus] = useState(false);
     const [posts ,setPosts] = useState()
+    const [newPost ,setNewPost] = useState('')
 
     //Check if the user is logged in or redirect to /login
     useEffect(()=>{
@@ -36,11 +37,31 @@ const Home = () => {
         .catch(err => console.log(err))
     },[setPosts])
 
+    //Add Post
+    async function addPost(event){
+        event.preventDefault()
+        const payload = {
+            "text" : newPost
+        }
+
+        axios.post(`http://localhost:5000/api/posts/`,payload,{
+            headers: {
+                'x-auth-token' : localStorage.getItem('x-auth-token')
+            }
+        }).then(res => setPosts(res.data))
+        .catch(err => console.log(err))
+
+        
+    }
+
   return (
     <div>
-        {status && posts &&
+        <form onSubmit={addPost}>
+                <input value = {newPost} onChange = {(e) => setNewPost(e.target.value)} type ='text' placeholder='Add a Post'/>
+                <input type = "submit" value="Add" />
+        </form>
+        {status && posts && 
         <Fragment>
-            <h1>Logged In</h1>
             {posts.map((post,index) => <li key={index}><Post post = {post} /></li>)}
         </Fragment>} 
     </div>

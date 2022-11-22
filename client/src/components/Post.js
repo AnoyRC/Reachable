@@ -8,10 +8,17 @@ const Post = (props) => {
     const [showComment , setShowComment] = useState(false)
     const [newComment , setNewComment] = useState('')
 
+    //Update Likes on startup/DOM reset
+    useEffect(()=>{
+        setLikes(post.likes);
+    },[post.likes])
+   
+    //Update Comment on startup/DOM reset
     useEffect(()=>{
         setComment(post.comments);
     },[post.comments])
 
+    //Like/Unlike Post
     async function likePost(event){
         event.preventDefault()
 
@@ -26,16 +33,32 @@ const Post = (props) => {
        
     }
 
+    //Show Comments
     async function commentPost(event){
         event.preventDefault()
         setShowComment(!showComment);
 
     }
 
+    //Delete Post
     async function deletePost(event){
+        event.preventDefault()
+        
+        axios.delete(`http://localhost:5000/api/posts/${post._id}`,{
+            headers: {
+                'x-auth-token' : localStorage.getItem('x-auth-token')
+            }
+        })
+        .then(await function(res){
+            console.log(res)
+            alert('Post Deleted')
+            window.location = '/Home'
+        })
+        .catch(err => console.log(err))
         
     }
 
+    //Post Comment
     async function postComment(event){
         event.preventDefault()
 
@@ -53,10 +76,11 @@ const Post = (props) => {
         setShowComment(true)
     }
 
+    //Delete Comment
     async function deleteComment(event , commentId){
         event.preventDefault()
 
-        axios.delete(`http://localhost:5000/api/posts/comment/${post._id}/${commentId}`,{
+        await axios.delete(`http://localhost:5000/api/posts/comment/${post._id}/${commentId}`,{
             headers: {
                 'x-auth-token' : localStorage.getItem('x-auth-token')
             }
@@ -82,7 +106,7 @@ const Post = (props) => {
         <ul>
             {comment.map((comment,index) => <Fragment key={index}>
                     <li>{comment.text}</li>
-                    <button type="button" onClick={(e) => deleteComment(e,comment._id)}>Delete</button> 
+                    <button type="button" onClick={((e) => deleteComment(e,comment._id))}>Delete</button> 
                 </Fragment>
             )}
         </ul>
